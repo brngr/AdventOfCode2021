@@ -15,15 +15,17 @@ def main():
 
     horizontal = 0
     depth = 0
+    aim = 0
 
     for c in commands:
         print(c)
         if c[0] == "forward":
             horizontal = horizontal + int(c[1])
+            depth = depth + aim * int(c[1])
         if c[0] == "down":
-            depth = depth + int(c[1])
+            aim = aim + int(c[1])
         if c[0] == "up":
-            depth = depth - int(c[1])
+            aim = aim - int(c[1])
     result = horizontal * depth
 
     print(horizontal)
