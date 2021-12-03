@@ -1,6 +1,6 @@
 #!/bin/python3
 import sys
-
+import cProfile
 def main():
     f = open(sys.argv[1], "r")
     puzzle_input = list(map(str, f.readlines()))
@@ -45,6 +45,5 @@ def main():
     print(int(oxygen[0],2)*int(scrubber[0],2))
 
 if __name__ == "__main__":
-    main()
-
-#6085575
+    #main()
+    cProfile.run("main()")
