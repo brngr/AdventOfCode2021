@@ -1,7 +1,5 @@
 #!/bin/python3
 import sys
-from typing import KeysView
-
 
 def main():
     f = open(sys.argv[1], "r")
