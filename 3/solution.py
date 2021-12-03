@@ -8,37 +8,45 @@ def main():
     puzzle_input = list(map(str, f.readlines()))
     f.close()
 
+    oxygen = []
+    scrubber = []
     for i in range(0, len(puzzle_input)):
         puzzle_input[i] = puzzle_input[i].strip()
+        oxygen.append(puzzle_input[i])
+        scrubber.append(puzzle_input[i])
 
-    count_1 = []
-    count_0 = []
-    for j in range(0, len(puzzle_input[0])):
-        count_1.append(0)
-        count_0.append(0)
-
-    for p in puzzle_input:
-        for k in range(0, len(p)):
-            if p[k] == "1":
-                count_1[k] = count_1[k] + 1
-            elif p[k] == "0":
-                count_0[k] = count_0[k] + 1
-
-    gamma = ""
-    epsilon = ""
-    for l in range(0, len(count_1)):
-        if count_1[l] > count_0[l]:
-            gamma = gamma + "1"
-            epsilon = epsilon + "0"
-        else:
-            gamma = gamma + "0"
-            epsilon = epsilon + "1"
-
-    gamma = int(gamma, 2)
-    epsilon = int(epsilon, 2)
-
-    print(gamma * epsilon)
-
+    for i in range(0,len(puzzle_input[0])):
+        count_0=0
+        count_1=0
+        oxygen.sort(key = lambda x: x[i])
+        scrubber.sort(key = lambda y: y[i])
+        if len(oxygen) > 1:
+            for j in range(0,len(oxygen)):
+                if oxygen[j][i] == '0':
+                    count_0+=1
+                if oxygen[j][i] == '1':
+                    count_1+=1
+            if count_0 and count_1 != 0:
+                if count_0 > count_1:
+                    oxygen = oxygen[0:count_0]
+                if count_1 >= count_0:
+                    oxygen = oxygen[count_0:len(oxygen)]
+        count_0=0
+        count_1=0
+        if len(scrubber) > 1:
+            for k in range(0,len(scrubber)):
+                if scrubber[k][i] == '0':
+                    count_0+=1
+                if scrubber[k][i] == '1':
+                    count_1+=1
+            if count_0 and count_1 != 0: 
+                if count_0 <= count_1:
+                    scrubber = scrubber[0:count_0]
+                if count_1 < count_0:
+                    scrubber = scrubber[count_0:len(scrubber)]
+    print(int(oxygen[0],2)*int(scrubber[0],2))
 
 if __name__ == "__main__":
     main()
+
+#6085575
