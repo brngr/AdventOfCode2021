@@ -20,6 +20,7 @@ class bingo_grid:
         self.grid=[]
         self.undrawn=[]
         self.score=0
+        self.won = False
         for c in grid:
             col=[]
             for n in c:
@@ -67,9 +68,10 @@ class bingo_grid:
 
     def check_bingo(self):
         if self.check_row() or self.check_col():
-            print(BOLD_START + RED_START + 'BINGO!' + END)
-            self.show_grid()
+            #print(BOLD_START + RED_START + 'BINGO!' + END)
+            #self.show_grid()
             self.get_sum()
+            self.won = True
             return True
 
         return False
@@ -78,16 +80,20 @@ class bingo_grid:
             for n in row:
                 if n.drawn == False:
                     self.score+=n.value
-        print(self.score)
         return
 
 def play_bingo(draw,grids):
-    card_score = 0
+    winners = 0
+    last_winner = 0
     for d in draw:
         for bg in grids:
             bg.is_in_grid(d)
-            if bg.check_bingo():
-                return d*bg.score
+            if bg.won == False:
+                if bg.check_bingo():
+                    winners+=1
+                    last_winner = bg
+                    if winners == len(grids):
+                        return d*last_winner.score
     
 
 def setup_bingo(puzzle_input):
