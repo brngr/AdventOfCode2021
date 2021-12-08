@@ -8,21 +8,19 @@ def main():
     f.close()
     school = puzzle_input
 
-    period = 80
+    period = 256
     day = 1
-    print(school)
+    timers = []
+    for i in range(0, 9):
+        timers.append(0)
+    for i in range(0, 9):
+        timers[i] = school.count(i)
     while day <= period:
-
-        for i in range(0, len(school)):
-            if school[i] == 0:
-                school[i] = 6
-                school.append(8)
-            elif 1 <= school[i]:
-                school[i] -= 1
-
-        # print(school)
+        new = timers.pop(0)
+        timers[6] = timers[6] + new
+        timers.append(new)
         day += 1
-    print(len(school))
+    print(sum(timers))
 
 
 if __name__ == "__main__":
